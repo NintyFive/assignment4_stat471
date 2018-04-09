@@ -1,0 +1,459 @@
+\documentclass[11pt]{article}
+
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{adjustbox}
+\usepackage{rotating}
+\usepackage{amsmath}
+\usepackage{float}
+
+% \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+
+% \allowdisplaybreaks
+
+\begin{document}
+
+% \title{%
+%   STAT 471/871 -- Sample Surveys and \\ Analysis of Experimental Design \\
+%   \Large Assignment 2 \\
+%   \large Queen's University \\
+%   \normalsize Prof. Chunfang Devon Lin}
+
+% \date{Winter, 2018}
+% \author{%
+% 	Filipe Roseiro Cogo\\
+% 	\textit{filipe.cogo@gmail.com}}
+
+% \maketitle
+
+\section{growth}
+\label{sec:1}
+
+We fit a second-order model using the following equation, check the summary and analysis of variance .
+\begin{verbatim}
+> h<-lm(Yield~x1+x2+x3+I(x1^2)+I(x2^2)+I(x3^2)+x1*x2+x2*x3+x1*x3,data = growth)
+> summary(h)
+> pure.error.anova(h)
+\end{verbatim}
+The summay and anova table are shown as shown in figure~\ref{fig:summary_growth} and figure~\ref{fig:anova_growth}
+\begin{figure}[h!]
+
+  \center
+  \includegraphics[scale = .45]{pictures/summary_growth.png}
+  \caption{summary of second order model}
+  \label{fig:summary_growth}
+\end{figure}
+
+\begin{figure}[h!]
+  
+  \center
+  \includegraphics[scale = .45]{pictures/anova_growth.png}
+  \caption{anova of second order model}
+  \label{fig:anova_growth}
+\end{figure}
+
+The p-value of lack of fit is 0.43529, which is greater than 0.05. Thus, we could conclude that the second model is adequate to represent the data.
+Fitted model:
+$\hat{y} = 100.666 + 1.271\hat{x_1} + 1.361\hat{x_2} - 1.494\hat{x_3} - 3.767\hat{x_1}^2 - 12.430\hat{x_2}^2 - 9.601\hat{x_3}^2 + 2.875\hat{x_1}\hat{x_2} - 4.625\hat{x_2}\hat{x_3} - 2.625\hat{x_1}\hat{x_3}$
+\\
+$B_{3,3} = 
+ \begin{pmatrix}
+  -3.7670 & 1.4375 & -1.3125 \\
+  1.4375 & -12.4300  & -2.3125 \\
+  -1.3125 & -2.3125 & -9.6010 
+ \end{pmatrix}$
+,$b =
+\begin{pmatrix}
+   1.271\\
+  1.361\\
+  -1.494 
+ \end{pmatrix}$
+,$x_s = -\frac{1}{2}B^{-1}b = \begin{pmatrix}
+    0.260\\
+  0.111\\
+  -0.140
+ \end{pmatrix} $, and the eigenvalues of matrix B are $\begin{pmatrix}
+   -3.078495\\
+  -8.953226\\
+  -13.766279
+ \end{pmatrix} $. All eigenvalues are negative, which makes sure that $X_s$ is the maximum point.
+
+\section{average age}
+\label{sec:2}
+\textbf{a)} The sample design is simple random sampling without replacement. Under SRSWOR, the sample mean $\bar{y}$ is an unbiased estimator of $\bar{Y}$, thus the estimator of  mean age for children is $\bar{y} = \frac{9*13 + 10*35 + 11*44 + 12*69 + 13*36 + 14*24 + 15*7 + 16*3 + 17*2 + 18*5}{240} = 11.917$
+The $v(\bar{y})$ is an unbiased estimator of $V(\bar{y})$, and $v(\bar{y}) =(1-f)\frac{s^2}{n} =  $ 
+%The factors of the experiment are treatment and poison. Treatment factor has four levels: A,B,C,D, while poison factor has three levels:1,2,3. 
+%
+%Regarding its randomization structure, each animal is randomly assigned to each of the 9 level combinations and all animals are tested in a random order.
+%
+%The design of the experiment is called two-factor factorial design. All combinations of treatment and poison are tested. Four replications are tested at each combination of treatment and poison factor.
+%
+%The statistical model for the experiment is:
+%
+%\begin{align*}
+%y_{ijk} = \mu + \tau_i + \beta_j + (\tau\beta)_{ij}+\epsilon_{ijk} \text{        }    
+%\begin{cases}
+%	i = 1, 2, 3,4 \\
+%	j = 1, 2, 3 \\
+%	k = 1, 2, 3
+%\end{cases}
+%\end{align*}
+%
+%
+%where $\mu$ is the overall mean, $\tau_i$ is the $i$-th treatment effect of factor treatment, $\beta_j$ is the $j$-th treatment effect of factor poison and $(\tau\beta)_{ij}$ is the interaction effect between $\tau_i$ and $\beta_j$. $\epsilon_{ijk}$ is the experimental error.  $\epsilon_{ijk} \sim \text{NID}(0,\sigma^{2})$.
+%
+%We are interested in testing whether factors influences survival time or not. Hence we have three hypothesis. They are:
+%
+%
+%\begin{align*}
+%	H_0&: \tau_1 = \tau_2 = ... = \tau_a = 0\\
+%	H_1&:  \exists i \mid \tau_i \neq 0 
+%\end{align*}
+%
+%\begin{align*}
+%	H_0&: \beta_1 = \beta_2 = ... = \beta_a = 0 \\
+%	H_1&:  \exists i \mid \beta_i \neq 0   
+%\end{align*}
+%
+%\begin{align*}
+%	H_0&: (\tau\beta)_{ij} = 0\;for\;all\;i,j\\
+%	H_1&:  \exists i \neq j, (\tau\beta)_{ij} \neq 0
+%\end{align*}
+%
+%The ANOVA is performed by calling the following R code:
+%
+%\begin{verbatim}
+%> g <- lm(response ~ treatment*poison,survival_time)
+%> anova(g)
+%\end{verbatim}
+%
+%The obtained ANOVA table is shown in Figure   \ref{fig:survival_time_anova}.
+%
+%\begin{figure}[h!]
+%  
+%  \center
+%  \includegraphics[scale = .65]{pictures/anova1.png}
+%  \caption{Anova table}
+%  \label{fig:survival_time_anova}
+%\end{figure}
+%The p-value of treatment factor is 3.777e-06, which is quite smaller than significant level 0.05. Hence, we could conclude treatment effects of factor treatment are not all the same. Same conclusion for poison factor, with small p-value, that treatments effects of factor poison are not all the same.
+%
+%\textbf{b)}
+%The p-value of interaction effect is 0.1123 $>$ 0.05, which gives no evidence to reject the null hypothesis that there is no interaction effect. 
+%
+%Use the following R code to fit the two-factor model without interaction effect.
+%\begin{verbatim}
+%g <- lm(response ~ treatment+poison, survival_time)
+%\end{verbatim}
+%
+%Then, we the plot of $\bar{y}_{ij.} - \hat{y}_{ijk}$ versus $\hat{y}_{ijk}$ graph as shown in Figure \ref{fig:1.b}.
+%
+%\begin{figure}[h!]
+%  
+%  \center
+%  \includegraphics[scale = .65]{pictures/1b.png}
+%  \caption{$\bar{y}_{ij.} - \hat{y}_{ijk}$ versus $\hat{y}_{ijk}$}
+%  \label{fig:1.b}
+%\end{figure}
+%
+%There is no pattern in the plot and the number of points above and below the zero line is equal, which is another evidence supporting there is no interaction effect.
+%
+%\textbf{c)} First, we check the assumptions in the model.
+%
+%\textbf{Are the residuals normally distributted?} Yes. According to figure~\ref{fig:normality1}, we conclude that the assumption of normality is valid with some outliers.
+%\begin{figure}[h!]
+%
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_normality.png}
+%  \caption{Normal Q-Q plot for the survival time experiment.}
+%    \label{fig:normality1}
+%\end{figure}
+%
+%\textbf{Are the experimental errors independent?} Yes. According to figure~\ref{fig:res_run_order_1}, and figure~\ref{fig:res_prece_1}, we could tell that there is no pattern in these two figures, which gives us evidence that the assumption of independence is satisfied. We could get the same conclusion by using the p-value in figure~\ref{fig:summary_res_1}, which is larger than 0.05, thus, we could not reject the null hypothesis that the assumption of independence is valid.
+%\begin{figure}[h!]
+% 
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_res_run_order.png}
+%  \caption{Plot of the residuals versus run order.}
+% \label{fig:res_run_order_1}
+%\end{figure}
+%
+%\begin{figure}[h!]
+%  
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_summary_res_prec.png}
+%  \caption{.}
+%  \label{fig:summary_res_1}
+%\end{figure}
+%
+%\begin{figure}[h!]
+%  
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_res_prece.png}
+%    \caption{Plot of the residual versus preceding residual.}
+%    \label{fig:res_prece_1}
+%\end{figure}
+%
+%\textbf{Are the variances constant?} No. Regarding to figure~\ref{fig:res_poison_1}, figure~\ref{fig:res_treatment_1} and figure~\ref{fig:fit_res_1}, we could tell there are obvious patterns in all these three figures. 
+%
+%In order to deal with the violation of assumption of variances constant, we use boxcox() in R to do Stabilize Variance transformation. The outputs of boxcox() are shown in figure~\ref{fig:boxcox}. We use $\lambda=-0.82$ and choose the transformation $Y_i^* = Y_i^{-0.82}$
+%After applying the transformation, we get the Normal Q-Q plot, plot of residuals versus run order, and plot of fitted value versus residuals as shown in figure~\ref{fig:res_run_order_2}, figure~\ref{fig:fit_res_2} and figure~\ref{fig:normality2}. Based on these three figures, we can conclude that the assumptions of independence, constant variance, normality are satisfied.
+%
+%
+%
+%According to anova table shown in figure~\ref{fig:anova2}, we can tell that the majority residuals come from poison and treatment.
+%
+%
+%\begin{figure}[h!]
+%  
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_res_poison.png}
+%    \caption{Plot of the residuals versus poison.}
+%    \label{fig:res_poison_1}
+%\end{figure}
+%
+%\begin{figure}[h!]
+%
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_res_treatment.png}
+%    \caption{Plot of the residuals versus poison.}
+%      \label{fig:res_treatment_1}
+%\end{figure}
+%
+%\begin{figure}[h!]
+% 
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_fit_res.png}
+%  \caption{Plot of the fitted values versus residuals.}
+%   \label{fig:fit_res_1}
+%\end{figure}
+%
+%\begin{figure*}[h!]
+%\resizebox{1\linewidth}{!}{
+%\begin{subfigure}{1\linewidth}
+%	\centering\includegraphics[scale = .8]{pictures/Rplot_boxcox1.png}
+%
+%\end{subfigure}
+%\begin{subfigure}{1\linewidth}
+%	\centering\includegraphics[scale = .8]{pictures/Rplot_boxcox2.png}
+%
+%\end{subfigure}
+%}
+%\caption{Plot of boxcox()}
+%\label{fig:boxcox}
+%\end{figure*}
+%
+%\begin{figure*}[h!]
+% 
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_res_run_order_2.png}
+%  \caption{Plot of the residuals versus run order.}
+%  \label{fig:res_run_order_2}
+%\end{figure*}
+%
+%\begin{figure*}[h!]
+% 
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_res_fit_2.png}
+%  \caption{Plot of the fitted values versus residuals.}
+%   \label{fig:fit_res_2}
+%\end{figure*}
+%
+%\begin{figure*}[h!]
+%
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_normality2.png}
+%  \caption{Normal Q-Q plot for the survival time experiment.}
+%    \label{fig:normality2}
+%\end{figure*}
+%
+%\begin{figure*}[h!]
+%
+%  \center
+%  \includegraphics[scale = .65]{pictures/anova2.png}
+%  \caption{Anova table}
+%    \label{fig:anova2}
+%\end{figure*}	
+%
+%\section{process development}
+%\label{sec:process development}
+%
+%\textbf{a)} The normal probability plot of the effect estimates is shown in figure~\ref{fig:b1}. 
+%\begin{figure}[h!]
+%  
+%  \center
+%  \includegraphics[scale = .65]{pictures/b1.png}
+%  \caption{The normal probability plot of the effect estimates}
+%  \label{fig:b1}
+%\end{figure}
+%Based on the plot, we can tell that effects A,D,C,AC and AD are significant. Thus, we conclude that factors A,C,D appear to have large effects, while factor B seems to be negligeable.
+%
+%\textbf{b)} Since factor B is not significant, we may discard B from the experiment so that the design becomes a $2^3$ factorial designs with three factors A,C,D and two replicates. We conduct an analysis of variance after removing factor B. The anova table is shown in figure~\ref{fig:b2}.
+%
+%\begin{figure}[h!]
+%  
+%  \center
+%  \includegraphics[scale = .65]{pictures/b2.png}
+%  \caption{The anova table after removing factor B}
+%  \label{fig:b2}
+%\end{figure}
+%
+%Regarding to the anova table, p-values of effect A,C,D,AC and AD are all quite smaller than significant level 0.05, which is an strong evidence that all these effects are significant.
+%
+%\textbf{c)} The summary of the linear regression model without factor B is shown in figure~\ref{fig:b3}.
+%
+%\begin{figure}[h!]
+%  
+%  \center
+%  \includegraphics[scale = .65]{pictures/b3.png}
+%  \caption{The summary of the linear regression model}
+%  \label{fig:b3}
+%\end{figure}
+%
+%Thus, the regression model:
+%
+%$\hat{y} = 17.375 +  2.25\hat{x_1} + \hat{x_3} + 1.625\hat{x_4} - 2.125\hat{x_1}\hat{x_3} + 2\hat{x_1}\hat{x_4}$
+%
+%Based on the regression model, we can tell that the best yield would be obtained when A and D are the high level and C is at the low level.
+%
+%\textbf{d)} We use the individual contrast of Lenth's Method and the result is shown in figure~\ref{fig:b4}.
+%
+%\begin{figure}[hbt]
+%  
+
+%  \center
+%  \includegraphics[scale = .65]{pictures/b4.png}
+%  \caption{The summary of the linear regression model}
+%   \label{fig:b4}
+%\end{figure}
+%
+%Regarding to the Lenth's Method, the effects of A,D,AC and AD are significant. Compared with part (a) and part (b), The Lenth's Method fails to detect the effect of C is also significant.
+%
+%\section{semiconductor fabrication plant}
+%\label{sec:semiconductor fabrication plant}
+%
+%\textbf{a)} Use ABCDE as our blocking variable and thus a unit belongs to block I if its entry in the ABCDE column is - and to block II if its entry in the ABCDE column is +.
+%
+%\begin{table}[]
+%\centering
+%\caption{My caption}
+%\label{my-label}
+%\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+%\hline
+%Lable & A & B & C & D & E & ABCDE & Block & Label & A & B & C & D & E & ABCDE & Block \\ \hline
+%(1)   & - & - & - & - & - & -     & I     & e     & - & - & - & - & + & +     & II    \\ \hline
+%a     & + & - & - & - & - & +     & II    & ae    & + & - & - & - & + & -     & I     \\ \hline
+%b     & - & + & - & - & - & +     & II    & be    & - & + & - & - & + & -     & I     \\ \hline
+%ab    & + & + & - & - & - & -     & I     & abe   & + & + & - & - & + & +     & II    \\ \hline
+%c     & - & - & + & - & - & +     & II    & ce    & - & - & + & - & + & -     & I     \\ \hline
+%ac    & + & - & + & - & - & -     & I     & ace   & + & - & - & + & + & +     & II    \\ \hline
+%bc    & - & + & + & - & - & -     & I     & bce   & - & + & + & - & + & +     & II    \\ \hline
+%abc   & + & + & + & - & - & +     & II    & abce  & + & + & + & - & + & -     & I     \\ \hline
+%d     & - & - & - & + & - & +     & II    & de    & - & - & - & + & + & -     & I     \\ \hline
+%ad    & + & - & - & + & - & -     & I     & ade   & + & - & - & + & + & +     & II    \\ \hline
+%bd    & - & + & - & + & - & -     & I     & bde   & - & + & - & + & + & +     & II    \\ \hline
+%abd   & + & + & - & + & - & +     & II    & abde  & + & + & - & + & + & -     & I     \\ \hline
+%cd    & - & - & + & + & - & -     & I     & cde   & - & - & + & + & + & +     & II    \\ \hline
+%acd   & + & - & + & + & - & +     & II    & acde  & + & - & + & + & + & -     & I     \\ \hline
+%bcd   & - & + & + & + & - & +     & II    & bcde  & - & + & + & + & + & -     & I     \\ \hline
+%abcd  & + & + & + & + & - & -     & I     & abcde & + & + & + & + & + & +     & II    \\ \hline
+%\end{tabular}
+%\end{table}
+%
+%We use the following R code to construct the model:
+%$g <- lm(y\sim(A+B+C+D+E)^5,data=fabrication)$
+%
+%The anova table is shown in figure~\ref{fig:anova3_semi}. Based on the anova table, we could tell that A,B,C and AB have larger sum of squares value, hence, main effect A,B,C and interaction effect AB tend to be significant important.
+%
+%The interaction effect of ABCDE is confounded with blocking effect, so we can not distinguish ABCDE interaction effect and blocking effect.
+%
+%Half normal probability plot of effects is shown in figure~\ref{fig:half_normality_semi}. We could tell that the main effects of A, B, C and interaction effect of AB are significant, which is confirmed to what we get from the anova table.
+%
+%\textbf{a)} Assume that four blocks are necessary, we need two block variables. And according to the Minimum Aberration Blocking Scheme, we choose to confound block effect with higher order interaction effect. Thus, blocking schema $ B_1 = ABD, B_2 = CDE$ could be a reasonable choice, since block effects are confounded with 3 or 4 factors (e.g.,ABD,CDE and ABCE) interaction effects.
+%\begin{figure}[hbt]
+%  
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_half_normality_effects.png}
+%  \caption{half normal probability plot of effects.}
+%  \label{fig:half_normality_semi}
+%\end{figure}
+%
+%\begin{figure}[hbt]
+%  
+%  \center
+%  \includegraphics[scale = .65]{pictures/anova3.png}
+%  \caption{anova table.}
+%  \label{fig:anova3_semi}
+%\end{figure}
+%
+%\section{yield of oil}
+%\label{sec:yield of oil}
+%
+%\textbf{a)} This is a $2^{5-1}$ fractional factorial design. The defining relation is $I = -ABCDE$, and the alias relationship is $A = -BCDE, B = -ACDE, C = -ABDE, D = -ABCE, E = -ABCD, AB = -CDE, AC = -BDE, AD = -BCE, AE = -BCD,BC = -ADE,BD = -ACE,BE = -ACE, CD = -ABE, CE = -ABD, DE =-ABC$
+%
+%\textbf{b)} We estimate the main effect of each factor as follow:
+%$ME(A) = \frac{Constrast_A}{16/2} =\frac{ (-69+27-42+105-30+72-77+60-29+80-86+39-69+27-50+102)}{8} = 7.5,ME(B) = \frac{Constrast_B}{16/2} = 19.75, ME(C) = \frac{Constrast_C}{16/2} = 1.25,ME(D) = \frac{Constrast_D}{16/2} = 0,ME(E) = \frac{Constrast_E}{16/2} = -44.5 $, We can tell that the factor B,E are the important factors based on their main effect.
+%
+%The half normal probability plot is shown in figure~\ref{fig:half_normal_oil}. From the plot, we identify that factor B,E are the important factors.
+%
+%\begin{figure}[hbt]
+%  
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_half_normality_oil.png}
+%  \caption{half normal probability plot of effects.}
+%  \label{fig:half_normal_oil}
+%\end{figure}
+%
+%\textbf{c)} We only consider factor to build the model by following R code,$h <- lm(y\sim E+B, data=oil\_yield)$, and the anova table of this model is shown in figure~\ref{fig:anova_oil}. We can tell that the p-values of factor E and B are quite smaller than 0.05, which is an evidence that factor B,Ehave a significant effect on the yield of peanut oil.
+%\begin{figure}[hbt]
+%  
+%  \center
+%  \includegraphics[scale = .65]{pictures/anova_oil.png}
+%  \caption{anova table}
+%  \label{fig:anova_oil}
+%\end{figure}
+%
+%\textbf{d)} The fitted value is as follow.
+%$\hat{y} = 60.25 + 9.875\hat{x_2} - 22.25\hat{x_5}$
+%
+%\textbf{e)}
+%The normality Q-Q plot is shown in figure~\ref{fig:normality_oil}, we can conclude that the assumption of normality is valid. The residuals versus run order plot is shown in figure~\ref{fig:res_run_order_oil}, again, the assumption of independence is valid. The fitted value versus residuals plot and residuals versus each factors plots are shown in figure~\ref{fig:fit_res_oil} and in figure~\ref{fig:res_factor_oil}, we could tell that these is are violated patterns in those figures, especially for plot of residuals versus factor A and B, hence, we conclude that the assumption of constant variance is violated.
+%
+%\begin{figure}[hbt]
+%
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_normality_oil.png}
+%  \caption{Normal Q-Q plot for the oil yield experiment.}
+%    \label{fig:normality_oil}
+%\end{figure}
+%
+%\begin{figure}[hbt]
+% 
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_res_run_order_oil.png}
+%  \caption{Plot of the residuals versus run order.}
+% \label{fig:res_run_order_oil}
+%\end{figure}
+%
+%\begin{figure}[hbt]
+% 
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_res_fitted_oil.png}
+%  \caption{Plot of the fitted values versus residuals.}
+%   \label{fig:fit_res_oil}
+%\end{figure}
+%
+%\begin{figure}[hbt]
+%  
+%  \center
+%  \includegraphics[scale = .65]{pictures/Rplot_factor_res_oil.png}
+%    \caption{Plot of the residuals versus each factor.}
+%    \label{fig:res_factor_oil}
+%\end{figure}
+%
+
+
+
+\end{document}
