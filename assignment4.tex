@@ -105,12 +105,13 @@ Use the regression estimation:
 
 $\hat{\beta_0} = 263098.45, \hat{\beta_1} = 58.09$
 
-$\hat{\bar{y}}_{req} = \hat{\beta_0} + \hat{\beta_1}\bar{x} =263098.45 +  58.09 * 2087759/3078 =   302500$
+$\hat{\bar{y}}_{req} = \hat{\beta_0} + \hat{\beta_1}\bar{x} =263098.45 +  58.09 * 2087759/3078 =   302,500$
 
 $\hat{t}_{{yreq}} = N\hat{\bar{y}}_{req} =3078 * 302500 = 931,095,000 $
 
 \textbf{c)}
 In order to find the method with most precision, we calculate the standard variance of $ \hat{t}_y$.
+
 ratio estimation with auxiliary variable acres87,
 †
 $ se(\hat{t}_{yra87}) = \sqrt{var(\hat{t}_y)} = \sqrt{N^2(1-\frac{n}{N})\frac{1}{n}\frac{1}{n-1}\sum_{i\in s}^{}{(y_i - \hat{R}x_i)^2}} = 5,344,567$
@@ -122,4 +123,28 @@ $ se(\hat{t}_{yrf87}) = \sqrt{var(\hat{t}_y)} = \sqrt{N^2(1-\frac{n}{N})\frac{1}
 regression estimation with auxiliary variable farms87,
 
 $ se(\hat{t}_{yregf87}) = \sqrt{var(\hat{t}_y)} = \sqrt{N^2(1-\frac{n}{N})\frac{1}{n}\frac{1}{n-1}\sum_{i\in s}^{}{(y_i - \beta_0 - \beta_1*x_i)^2}} = 58,065,813$
+
+Based on the variances, we can tell that ratio estimation has the most precision since its variance is minimum among these three methods.
+
+\section{Neyman allocation}
+\textbf{a)}
+\begin{align*} 
+V_{Neyman}(\hat{t}_{str}) & = N^2V(\bar{y}_{st}) = N^2\sum_{h=1}^{H}{{W_h}^2(1-\frac{n_h}{N_h}){S_h}^2/n_h} \\ 
+& = \sum_{h=1}^{H}{{N_h}^2(1-\frac{n_h}{N_h}){S_h}^2/n_h} \\
+& = \sum_{h=1}^{H}{{N_h}^2(1-\frac{\frac{N_hS_hn}{\sum_{h=1}^{H}{N_lS_l}}}{N_h}){S_h}^2\frac{\sum_{h=1}^{H}{N_lS_l}}{N_hS_hn}}\\
+& = \sum_{h=1}^{H}{N_hS_h(1-\frac{S_hn}{\sum_{h=1}^{H}{N_lS_l}})\frac{\sum_{h=1}^{H}{N_lS_l}}{n}}\\
+& = \sum_{h=1}^{H}{N_hS_h(\frac{\sum_{h=1}^{H}{N_lS_l}}{n}-S_h)}\\
+& = \frac{1}{n}\sum_{h=1}^{H}{N_lS_l}\sum_{h=1}^{H}{N_hS_h} - \sum_{h=1}^{H}{N_h{S_h}^2}\\
+& = \frac{1}{n}(\sum_{h=1}^{H}{N_hS_h})^2 - \sum_{h=1}^{H}{N_h{S_h}^2}
+\end{align*}
+
+\textbf{b)}
+\begin{align*} 
+V_{prop}(\hat{t}_{str})  - V_{Neyman}(\hat{t}_{str}) \\
+ & = \frac{N}{n}\sum_{h=1}^{H}{N_h{S_h}^2} -  \sum_{h=1}^{H}{N_h{S_h}^2} -  \frac{1}{n}(\sum_{h=1}^{H}{N_hS_h})^2 + \sum_{h=1}^{H}{N_h{S_h}^2}\\
+& =  \frac{N}{n}\sum_{h=1}^{H}{N_h{S_h}^2} -  \frac{1}{n}(\sum_{h=1}^{H}{N_hS_h})^2\\
+& =  \frac{N^2}{n}\sum_{h=1}^{H}{\frac{N_h}{N}{S_h}^2} - \frac{N^2}{n}(\sum_{h=1}^{H}{\frac{N_h}{N}S_h})^2\\
+& =  \frac{N^2}{n}[\sum_{h=1}^{H}{\frac{N_h}{N}{S_h}^2} - (\sum_{h=1}^{H}{\frac{N_h}{N}S_h})^2]\\
+& =  \frac{N^2}{n}\sum_{h=1}^{H}{\frac{N_h}{N}(S_h-\sum_{l=1}^{H}{\frac{N_l}{N}S_l})^2}
+\end{align*}
 \end{document}
