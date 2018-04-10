@@ -1,6 +1,6 @@
 # 1
-#install.packages('alr3')
-install.packages('matlib')
+# install.packages('alr3')
+# install.packages('matlib')
 library('alr3')
 library('matlib')
 growth <- read.table("growth.txt", header=T,colClasses = c("numeric","numeric","numeric","numeric"))
@@ -9,10 +9,18 @@ names(growth)
 
 h<-lm(Yield~x1+x2+x3+I(x1^2)+I(x2^2)+I(x3^2)+x1*x2+x2*x3+x1*x3,data = growth)
 summary(h)
+# b = c(1.271,1.361,-1.494)
+# B = matrix(c(-3.767,2.875/2,-2.625/2,2.875/2,-12.430,-4.625/2,-2.625/2,-4.625/2,-9.601),nrow = 3,ncol = 3)
+# t(B)
+# ev = eigen(B)
+# ev$values
+h<-lm(Yield~x2+x3+I(x2^2)+I(x3^2)+x2*x3,data = growth)
+summary(h)
 pure.error.anova(h)
-b = c(1.271,1.361,-1.494)
-B = matrix(c(-3.767,2.875/2,-2.625/2,2.875/2,-12.430,-4.625/2,-2.625/2,-4.625/2,-9.601),nrow = 3,ncol = 3)
+b = c(1.361,-1.494)
+B = matrix(c(-12.055,-4.625/2,-4.625/2,-9.227),nrow = 2,ncol = 2)
 t(B)
+-1/2*solve(B)%*%b
 ev = eigen(B)
 ev$values
 #2

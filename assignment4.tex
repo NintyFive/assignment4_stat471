@@ -9,29 +9,13 @@
 \usepackage{amsmath}
 \usepackage{float}
 
-% \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
-
-% \allowdisplaybreaks
-
 \begin{document}
 
-% \title{%
-%   STAT 471/871 -- Sample Surveys and \\ Analysis of Experimental Design \\
-%   \Large Assignment 2 \\
-%   \large Queen's University \\
-%   \normalsize Prof. Chunfang Devon Lin}
-
-% \date{Winter, 2018}
-% \author{%
-% 	Filipe Roseiro Cogo\\
-% 	\textit{filipe.cogo@gmail.com}}
-
-% \maketitle
 
 \section{growth}
 \label{sec:1}
 
-We fit a second-order model using the following equation, check the summary and analysis of variance.
+We fit a second-order model using the following equation, check the summary.
 \begin{verbatim}
 > h<-lm(Yield~x1+x2+x3+I(x1^2)+I(x2^2)+I(x3^2)+x1*x2+x2*x3+x1*x3,data = growth)
 > summary(h)
@@ -46,39 +30,74 @@ The summay and anova table are shown as shown in figure~\ref{fig:summary_growth}
   \label{fig:summary_growth}
 \end{figure}
 
+Based on the p-values in figure 1, we could tell that x1 is significant non-important and we can simply remove x1 from our model. We refit the model using the following code, check the summary and analysis of variance.
+\begin{verbatim}
+>h<-lm(Yield~x2+x3+I(x2^2)+I(x3^2)+x2*x3,data = growth)
+>summary(h)
+>pure.error.anova(h)
+\end{verbatim}
+
+\begin{figure}[h!]
+
+  \center
+  \includegraphics[scale = .45]{pictures/summary_growth2.png}
+  \caption{summary of second order model}
+  \label{fig:summary_growth}
+\end{figure}
+
+
 \begin{figure}[h!]
   
   \center
-  \includegraphics[scale = .45]{pictures/anova_growth.png}
+  \includegraphics[scale = .45]{pictures/anova_growth2.png}
   \caption{anova of second order model}
   \label{fig:anova_growth}
 \end{figure}
 
-The p-value of lack of fit is 0.43529, which is greater than 0.05. Thus, we could conclude that the second model is adequate to represent the data.
+The p-value of lack of fit is 0.373181, which is greater than 0.05. Thus, we could conclude that the second model is adequate to represent the data.
 Fitted model:
-$\hat{y} = 100.666 + 1.271\hat{x_1} + 1.361\hat{x_2} - 1.494\hat{x_3} - 3.767\hat{x_1}^2 - 12.430\hat{x_2}^2 - 9.601\hat{x_3}^2 + 2.875\hat{x_1}\hat{x_2} - 4.625\hat{x_2}\hat{x_3} - 2.625\hat{x_1}\hat{x_3}$
+$\hat{y} = 97.583 + 1.361\hat{x_2} - 1.494\hat{x_3} - 12.055\hat{x_2}^2 - 9.227\hat{x_3}^2- 4.625\hat{x_2}\hat{x_3} $
 \\
-$B_{3,3} = 
+$B_{2,2} = 
  \begin{pmatrix}
-  -3.7670 & 1.4375 & -1.3125 \\
-  1.4375 & -12.4300  & -2.3125 \\
-  -1.3125 & -2.3125 & -9.6010 
+  -12.055 & -2.3125 \\
+  -2.3125 &-12.055 
  \end{pmatrix}$
 ,$b =
 \begin{pmatrix}
-   1.271\\
   1.361\\
   -1.494 
  \end{pmatrix}$
 ,$x_s = -\frac{1}{2}B^{-1}b = \begin{pmatrix}
-    0.260\\
-  0.111\\
-  -0.140
+   0.07561505\\
+ -0.09990894
  \end{pmatrix} $, and the eigenvalues of matrix B are $\begin{pmatrix}
-   -3.078495\\
-  -8.953226\\
-  -13.766279
+  -7.930455\\
+  -13.351545
  \end{pmatrix} $. All eigenvalues are negative, which makes sure that $X_s$ is the maximum point.
+
+Based on the result, we can couclude that the optimal setting is x2 = 0.076, x3 = -0.1, while x1 can be any value since it is not important.
+%$B_{3,3} = 
+% \begin{pmatrix}
+%  -3.7670 & 1.4375 & -1.3125 \\
+%  1.4375 & -12.4300  & -2.3125 \\
+%  -1.3125 & -2.3125 & -9.6010 
+% \end{pmatrix}$
+%,$b =
+%\begin{pmatrix}
+%   1.271\\
+%  1.361\\
+%  -1.494 
+% \end{pmatrix}$
+%,$x_s = -\frac{1}{2}B^{-1}b = \begin{pmatrix}
+%    0.260\\
+%  0.111\\
+%  -0.140
+% \end{pmatrix} $, and the eigenvalues of matrix B are $\begin{pmatrix}
+%   -3.078495\\
+%  -8.953226\\
+%  -13.766279
+% \end{pmatrix} $. All eigenvalues are negative, which makes sure that $X_s$ is the maximum point.
 
 \section{average age}
 \label{sec:2}
@@ -140,8 +159,7 @@ V_{Neyman}(\hat{t}_{str}) & = N^2V(\bar{y}_{st}) = N^2\sum_{h=1}^{H}{{W_h}^2(1-\
 
 \textbf{b)}
 \begin{align*} 
-V_{prop}(\hat{t}_{str})  - V_{Neyman}(\hat{t}_{str}) \\
- & = \frac{N}{n}\sum_{h=1}^{H}{N_h{S_h}^2} -  \sum_{h=1}^{H}{N_h{S_h}^2} -  \frac{1}{n}(\sum_{h=1}^{H}{N_hS_h})^2 + \sum_{h=1}^{H}{N_h{S_h}^2}\\
+V_{prop}(\hat{t}_{str})  - V_{Neyman}(\hat{t}_{str}) & =  \frac{N}{n}\sum_{h=1}^{H}{N_h{S_h}^2} -  \sum_{h=1}^{H}{N_h{S_h}^2} -  \frac{1}{n}(\sum_{h=1}^{H}{N_hS_h})^2 + \sum_{h=1}^{H}{N_h{S_h}^2}\\
 & =  \frac{N}{n}\sum_{h=1}^{H}{N_h{S_h}^2} -  \frac{1}{n}(\sum_{h=1}^{H}{N_hS_h})^2\\
 & =  \frac{N^2}{n}\sum_{h=1}^{H}{\frac{N_h}{N}{S_h}^2} - \frac{N^2}{n}(\sum_{h=1}^{H}{\frac{N_h}{N}S_h})^2\\
 & =  \frac{N^2}{n}[\sum_{h=1}^{H}{\frac{N_h}{N}{S_h}^2} - (\sum_{h=1}^{H}{\frac{N_h}{N}S_h})^2]\\
