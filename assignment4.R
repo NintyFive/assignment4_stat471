@@ -47,20 +47,19 @@ for ( k in c(1:4)){
 
 
 #4
-# install.packages('SDaA')
+install.packages('SDaA')
 require('SDaA')
 attach(agsrs)
-agsrs$acres92
-agsrs$farms92
+
 r = mean(agsrs$acres92)/mean(agsrs$farms87)
 r*2087759
 
 #b
-fit = lm(acres92~farms92)
+fit = lm(acres92~farms87)
 summary(fit)
 fit$coefficients
-y = 263098.45 + 58.09 * mean(farms92)
-y*2087759
+y = 267029.81 + 47.65* mean(farms87)
+y*3078
 
 #c
 r = mean(acres92)/mean(acres87)

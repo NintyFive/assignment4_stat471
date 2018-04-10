@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.9)  9 APR 2018 21:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.9)  9 APR 2018 23:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -252,11 +252,7 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \float@box=\box57
 \@float@everytoks=\toks24
 \@floatcapt=\box58
-) (./assignment4.aux
-
-LaTeX Warning: Label `fig:summary_growth' multiply defined.
-
-)
+) (./assignment4.aux)
 \openout1 = `assignment4.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
@@ -271,7 +267,8 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
 LaTeX Font Info:    ... okay on input line 12.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
 LaTeX Font Info:    ... okay on input line 12.
- (c:/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+
+(c:/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count117
 \scratchdimen=\dimen141
@@ -350,6 +347,14 @@ Overfull \hbox (94.14633pt too wide) in paragraph at lines 23--23
 3+x1*x3,data = growth)[] 
  []
 
+
+LaTeX Warning: Reference `fig:summary_growth' on page 1 undefined on input line
+ 24.
+
+
+LaTeX Warning: Reference `fig:anova_growth' on page 1 undefined on input line 2
+4.
+
 <pictures/summary_growth.png, id=1, 493.845pt x 457.71pt>
 File: pictures/summary_growth.png Graphic file (type png)
 <use pictures/summary_growth.png>
@@ -414,13 +419,16 @@ Overfull \hbox (46.46114pt too wide) detected at line 167
 
 [4] (./assignment4.aux)
 
-LaTeX Warning: There were multiply-defined labels.
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
  4241 strings out of 492982
  64304 string characters out of 6136226
- 139558 words of memory out of 5000000
+ 140479 words of memory out of 5000000
  7733 multiletter control sequences out of 15000+600000
  8134 words of font info for 30 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -437,7 +445,7 @@ c:/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/
 2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2017/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2017/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on assignment4.pdf (4 pages, 172500 bytes).
+Output written on assignment4.pdf (4 pages, 173214 bytes).
 PDF statistics:
  76 PDF objects out of 1000 (max. 8388607)
  50 compressed objects within 1 object stream
